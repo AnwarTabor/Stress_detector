@@ -1,0 +1,17 @@
+# Virtual Environments
+venv/
+venv_ML/
+env/
+ENV/
+
+# Data files (generated or downloaded)
+data/processed/*.npy
+data/raw/WESAD/
+*.pkl
+
+# Models (generated)
+models/*.pkl
+models/*.h5
+
+#Download files 
+download_wesad.py
