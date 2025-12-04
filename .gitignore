@@ -1,17 +1,37 @@
-# Virtual Environments
+#Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+#Virtual Environments
 venv/
 venv_ML/
 env/
 ENV/
 
-# Data files (generated or downloaded)
+#Data files 
 data/processed/*.npy
 data/raw/WESAD/
 *.pkl
 
-# Models (generated)
+#Models 
 models/*.pkl
 models/*.h5
+
+#Results 
+results/*.png
+results/*.jpg
+results/*.txt
+results/*.pdf
+
+#IDE
+.vscode/
+.idea
+
+#OS
+.DS_Store
+Thumbs.db
 
 #Download files 
 download_wesad.py
