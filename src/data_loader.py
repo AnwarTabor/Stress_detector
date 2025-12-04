@@ -1,7 +1,7 @@
-
-#Data Loader for WESAD Dataset (Wearable Stress and Affect Detection)
-
-
+"""
+Data Loader for WESAD Dataset
+Downloads and prepares the WESAD (Wearable Stress and Affect Detection) dataset
+"""
 
 import os
 import pickle
@@ -13,10 +13,11 @@ import zipfile
 from tqdm import tqdm
 
 class WESADDataLoader:
-    
-    #Loads and preprocesses WESAD dataset
-    #Dataset contains physiological signals from wearable sensors
-    #Labels: 0=not defined, 1=baseline, 2=stress, 3=amusement, 4=meditation
+    """
+    Loads and preprocesses WESAD dataset
+    Dataset contains physiological signals from wearable sensors
+    Labels: 0=not defined, 1=baseline, 2=stress, 3=amusement, 4=meditation
+    """
     
     def __init__(self, data_dir='data/raw/WESAD'):
         self.data_dir = Path(data_dir)
@@ -170,6 +171,14 @@ class WESADDataLoader:
                         if label == 0:
                             continue
                         
+                        # Convert labels to binary BEFORE filtering
+                        # 1=baseline, 2=stress, 3=amusement, 4=meditation
+                        if binary_classification:
+                            # Binary: stress (2) vs non-stress (1,3,4)
+                            binary_label = 1 if label == 2 else 0
+                        else:
+                            binary_label = label
+                        
                         # Extract features
                         features = {}
                         
@@ -191,14 +200,7 @@ class WESADDataLoader:
                         features['temp_std'] = np.std(temp_window)
                         
                         all_features.append(features)
-                        
-                        # Convert labels to binary if needed
-                        if binary_classification:
-                            # 1=baseline, 2=stress, 3=amusement, 4=meditation
-                            # Binary: stress (2) vs non-stress (1,3,4)
-                            label = 1 if label == 2 else 0
-                        
-                        all_labels.append(label)
+                        all_labels.append(binary_label)
                         all_subject_ids.append(subject_id)
                         
             except FileNotFoundError:

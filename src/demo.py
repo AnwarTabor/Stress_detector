@@ -18,8 +18,18 @@ class StressDetectorDemo:
     def __init__(self, model_path='models/stress_detector.pkl', 
                  scaler_path='models/scaler.pkl'):
         """Load trained model and scaler"""
-        self.model = joblib.load(model_path)
-        self.scaler = joblib.load(scaler_path)
+        # Find the project root (where models/ folder is)
+        import os
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir) if os.path.basename(current_dir) == 'src' else current_dir
+        
+        # Construct full paths
+        full_model_path = os.path.join(project_root, model_path)
+        full_scaler_path = os.path.join(project_root, scaler_path)
+        
+        # Load model and scaler
+        self.model = joblib.load(full_model_path)
+        self.scaler = joblib.load(full_scaler_path)
         
         # Feature names
         self.feature_names = [
