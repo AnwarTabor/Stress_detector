@@ -1,6 +1,5 @@
 """
-Interactive Demo Script for Stress Detection
-Demonstrates the trained model with sample predictions
+Demo script for stress detection 
 """
 
 import numpy as np
@@ -18,7 +17,6 @@ class StressDetectorDemo:
     def __init__(self, model_path='models/stress_detector.pkl', 
                  scaler_path='models/scaler.pkl'):
         """Load trained model and scaler"""
-        # Find the project root (where models/ folder is)
         import os
         current_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(current_dir) if os.path.basename(current_dir) == 'src' else current_dir
@@ -209,15 +207,15 @@ class StressDetectorDemo:
         ax.set_xlim([0, 1])
         ax.axvline(x=0.5, color='gray', linestyle='--', alpha=0.5)
         
-        # Add labels
+        #Add labels
         for i, (bar, pred) in enumerate(zip(bars, predictions)):
             label = 'STRESS' if pred == 1 else 'NO STRESS'
             ax.text(0.5, i, f'  {label}', va='center', fontweight='bold', color='white')
         
-        # Plot 2: Feature comparison
+        #Plot 2: Feature comparison
         ax = axes[1]
         
-        # Compare EDA mean across scenarios
+        #Compare EDA mean across scenarios
         eda_means = [r['features']['eda_mean'] for r in results]
         bvp_means = [r['features']['bvp_mean'] for r in results]
         temp_means = [r['features']['temp_mean'] for r in results]
@@ -251,21 +249,21 @@ class StressDetectorDemo:
         plt.show()
     
     def predict_custom(self, eda_mean, bvp_mean, temp_mean):
-        """
-        Make prediction with custom values (simplified interface)
         
-        Args:
-            eda_mean: Electrodermal activity mean
-            bvp_mean: Blood volume pulse mean  
-            temp_mean: Temperature mean
+        #Make prediction with custom values (simplified interface)
+        
+        #Args:
+            #eda_mean: Electrodermal activity mean
+            #bvp_mean: Blood volume pulse mean  
+            #temp_mean: Temperature mean
             
-        Returns:
-            Prediction and probability
-        """
-        # Create feature dict with reasonable defaults
+        #Returns:
+            #Prediction and probability
+        
+        # reate feature dict with reasonable defaults
         features = {
             'eda_mean': eda_mean,
-            'eda_std': eda_mean * 0.2,  # Assume std is 20% of mean
+            'eda_std': eda_mean * 0.2,  #Assume std is 20% of mean
             'eda_min': eda_mean * 0.7,
             'eda_max': eda_mean * 1.3,
             'eda_range': eda_mean * 0.6,
@@ -282,16 +280,16 @@ class StressDetectorDemo:
 
 def main():
     """Run the demo"""
-    # Initialize demo
+    #Initialize demo
     demo = StressDetectorDemo()
     
-    # Run interactive demo
+    #Run interactive demo
     results = demo.run_interactive_demo()
     
-    # Visualize results
+    #Visualize results
     demo.visualize_predictions(results)
     
-    # Example custom prediction
+    #Example custom prediction
     print("\n" + "="*60)
     print("CUSTOM PREDICTION EXAMPLE")
     print("="*60)
